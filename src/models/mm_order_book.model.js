@@ -6,10 +6,25 @@ const { Sequelize, ModelStatic, DataTypes } = require("sequelize");
  * @returns {ModelStatic<any>}
  */
 
+// https://sequelize.org/docs/v6/core-concepts/assocs/#many-to-many-relationships
 module.exports = (sequelize) => {
   const MM_Order_Book = sequelize.define(
     "MM_Order_Book",
     {
+      OrderId: {
+        type: DataTypes.INTEGER,
+        references: {
+          model: Order, // 'Orders' would also work
+          key: "id",
+        },
+      },
+      BookId: {
+        type: DataTypes.INTEGER,
+        references: {
+          model: Book, // 'Books' would also work
+          key: "id",
+        },
+      },
       quantity: {
         type: DataTypes.INTEGER,
         allowNull: false,

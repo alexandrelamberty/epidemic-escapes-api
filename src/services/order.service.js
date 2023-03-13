@@ -27,8 +27,7 @@ const orderService = {
     console.log("Create a new Order", userId, orderToAdd);
     const transaction = await db.sequelize.transaction();
 
-    let order = await db.Order.create();
-    order.addUser(userId);
+    let order = await db.Order.create({ UserId: userId });
     console.log("order", order);
 
     try {
