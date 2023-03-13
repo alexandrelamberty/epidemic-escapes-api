@@ -1,0 +1,59 @@
+version: '3.1'
+
+services:
+
+  # Databases
+  
+  # https://hub.docker.com/_/postgres
+  postgress:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: bookstore
+
+  # https://hub.docker.com/_/mysql
+  mysql:
+    image: mysql
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: bookstore
+    ports:
+      - 3306:3306
+
+  # https://hub.docker.com/_/mariadb
+  mariadb:
+    image: mariadb
+    restart: always
+    environment:
+      MARIADB_ROOT_PASSWORD: password
+      MARIADB_DATABASE: bookstore
+
+  # 
+  mssqlserver:
+    image: microsoft/mssql-server-linux:2017-latest
+    ports:
+      - "1433:1433"
+    environment:
+      SA_PASSWORD: "123456"
+      ACCEPT_EULA: "Y"
+
+  # Database Administration tools
+  
+  # https://hub.docker.com/_/adminer
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
+
+  # https://hub.docker.com/r/dpage/pgadmin4/
+  # https://github.com/khezen/compose-postgres
+  # https://belowthemalt.com/2021/06/09/run-postgresql-and-pgadmin-in-docker-for-local-development-using-docker-compose/
+  pgadmin:
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_PASSWORD: ""
+      PGADMIN_CONFIG_SERVER_MODE: 'False'
