@@ -8,8 +8,9 @@ const orderService = {
       distinct: true,
       offset,
       limit,
-      include: [db.Book],
+      include: [db.User, db.Book],
     });
+    console.log(rows);
     return {
       orders: rows.map((order) => new OrderDTO(order)),
       count,
@@ -24,13 +25,13 @@ const orderService = {
   },
 
   create: async (userId, orderToAdd) => {
-    console.log("Create a new Order", userId, orderToAdd);
     const transaction = await db.sequelize.transaction();
 
-    let order = await db.Order.create({ UserId: userId });
-    console.log("order", order);
-
     try {
+      // Create the order
+      let order = await db.Order.create({ UserId: userId });
+
+      // Add the books and quantity to the order
       for (const book of orderToAdd.books) {
         await order.addBook(book.id, {
           through: { quantity: book.quantity },
@@ -40,20 +41,23 @@ const orderService = {
       await transaction.commit();
 
       const addedOrder = await db.Order.findByPk(order.id, {
-        include: [db.Book],
+        include: [db.User, db.Book],
       });
 
       return addedOrder ? new OrderDTO(addedOrder) : null;
     } catch (err) {
+      console.log(err);
       await transaction.rollback();
       return null;
     }
   },
 
-  update: async (id, orderToUpdate) => {
-    const updatedRow = await db.Order.update(orderToUpdate, {
+  update: async (id, order) => {
+    console.log("------ order id: ", id, order);
+    const updatedRow = await db.Order.update(order, {
       where: { id },
     });
+    console.log(updatedRow);
 
     return updatedRow[0] === 1;
   },

@@ -7,6 +7,7 @@ const genreService = {
       distinct: true,
       offset: offset,
       limit: limit,
+      include: [db.Book],
     });
     return {
       genres: rows.map((genre) => new GenreDTO(genre)),

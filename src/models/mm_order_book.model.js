@@ -1,4 +1,5 @@
 const { Sequelize, ModelStatic, DataTypes } = require("sequelize");
+const db = require(".");
 
 /**
  * Constructeur du Modele MM_Artist_Track
@@ -14,14 +15,14 @@ module.exports = (sequelize) => {
       OrderId: {
         type: DataTypes.INTEGER,
         references: {
-          model: Order, // 'Orders' would also work
+          model: db.Order, // 'Orders' would also work
           key: "id",
         },
       },
       BookId: {
         type: DataTypes.INTEGER,
         references: {
-          model: Book, // 'Books' would also work
+          model: db.Book, // 'Books' would also work
           key: "id",
         },
       },

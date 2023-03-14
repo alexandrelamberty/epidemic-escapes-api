@@ -8,6 +8,7 @@ const authorService = {
       distinct: true,
       offset,
       limit,
+      include: ["Books"],
     });
     return {
       authors: rows.map((author) => new AuthorDTO(author)),

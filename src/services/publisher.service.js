@@ -7,6 +7,7 @@ const publisherService = {
       distinct: true,
       offset,
       limit,
+      include: [db.Book],
     });
     return {
       publishers: rows.map((publisher) => new PublisherDTO(publisher)),

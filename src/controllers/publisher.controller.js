@@ -53,7 +53,6 @@ const publisherController = {
   update: async (req, res) => {
     const { id } = req.params;
     const data = req.body;
-
     const updated = await publisherService.update(id, data);
     if (!updated) {
       res.sendStatus(404);
