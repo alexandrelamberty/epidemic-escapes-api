@@ -31,16 +31,31 @@ db.Publisher.hasMany(db.Book);
 db.Book.belongsTo(db.Genre);
 db.Book.belongsTo(db.Publisher);
 db.Book.belongsToMany(db.Author, { through: "MM_Book_Author" });
-db.Book.belongsToMany(db.Order, { through: db.MM_Order_Book });
+db.Book.belongsToMany(
+  db.Order,
+  { through: db.MM_Order_Book },
+  { foreignKey: "BookId" }
+);
 
 // Author
 db.Author.belongsToMany(db.Book, { through: "MM_Book_Author" });
 
 // Order
-db.Order.belongsToMany(db.Book, { through: db.MM_Order_Book });
+db.Order.belongsToMany(
+  db.Book,
+  { through: db.MM_Order_Book },
+  { foreignKey: "OrderId" }
+);
 db.Order.belongsTo(db.User);
 
 // User
 db.User.hasMany(db.Order);
+
+// Testing
+
+db.Book.hasMany(db.MM_Order_Book);
+db.MM_Order_Book.belongsTo(db.Book);
+db.Order.hasMany(db.MM_Order_Book);
+db.MM_Order_Book.belongsTo(db.Order);
 
 module.exports = db;

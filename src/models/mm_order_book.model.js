@@ -40,5 +40,5 @@ module.exports = (sequelize) => {
     }
   );
 
-  return "MM_Order_Book";
+  return MM_Order_Book;
 };

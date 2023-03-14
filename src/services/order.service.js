@@ -9,29 +9,40 @@ const orderService = {
       offset,
       limit,
       include: [
-        db.User,
-        db.Book,
-        // {
-        //   model: db.MM_Order_Book,
-        //   include: [
-        //     {
-        //       model: db.Book,
-        //     },
-        //   ],
-        // },
+        {
+          model: db.User,
+        },
+        {
+          model: db.MM_Order_Book,
+          include: [db.Book, db.Order],
+        },
       ],
     });
-    console.log(rows);
+    // console.log(rows);
     return {
-      orders: rows.map((order) => new OrderDTO(order)),
+      orders: rows.map((order) => {
+        // console.log(order.MM_Order_Books);
+        return new OrderDTO(order);
+      }),
       count,
     };
   },
 
   getById: async (id) => {
     const order = await db.Order.findByPk(id, {
-      include: [db.Book],
+      include: [
+        {
+          model: db.User,
+        },
+        {
+          model: db.MM_Order_Book,
+          include: [db.Book, db.Order],
+        },
+      ],
     });
+    console.log("Get Order By Id: ", order);
+    // order.getBooks();
+    // console.log(order);
     return order ? new OrderDTO(order) : null;
   },
 

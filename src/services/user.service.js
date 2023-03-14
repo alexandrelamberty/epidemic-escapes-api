@@ -7,6 +7,17 @@ const userService = {
       distinct: true,
       offset,
       limit,
+      // include: [
+      //   {
+      //     model: db.Order,
+      //     include: [
+      //       {
+      //         model: db.MM_Order_Book,
+      //         include: [db.User, db.Book],
+      //       },
+      //     ],
+      //   },
+      // ],
     });
     return {
       users: rows.map((user) => new UserDTO(user)),
