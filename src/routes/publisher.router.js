@@ -25,7 +25,6 @@ publisherRouter
     bodyValidation(publisherValidator),
     publisherController.update
   )
-  .delete(publisherController.delete)
   .delete(authJwt(["Admin"]), publisherController.delete);
 
 module.exports = publisherRouter;

@@ -8,7 +8,18 @@ const orderService = {
       distinct: true,
       offset,
       limit,
-      include: [db.User, db.Book],
+      include: [
+        db.User,
+        db.Book,
+        // {
+        //   model: db.MM_Order_Book,
+        //   include: [
+        //     {
+        //       model: db.Book,
+        //     },
+        //   ],
+        // },
+      ],
     });
     console.log(rows);
     return {
@@ -52,14 +63,40 @@ const orderService = {
     }
   },
 
-  update: async (id, order) => {
-    console.log("------ order id: ", id, order);
-    const updatedRow = await db.Order.update(order, {
-      where: { id },
-    });
-    console.log(updatedRow);
+  update: async (id, updateOrder) => {
+    console.log("------ update order id: ", id, updateOrder);
 
-    return updatedRow[0] === 1;
+    const transaction = await db.sequelize.transaction();
+
+    try {
+      // Retrieve the order
+      let order = await db.Order.findByPk(id, {
+        include: [db.Book],
+      });
+      //console.log("update order: ", await order.getBooks());
+
+      // Remove the Book association
+      order.setBooks([]);
+
+      // Update the Book association
+      for (const book of updateOrder.books) {
+        await order.addBook(book.id, {
+          through: { quantity: book.quantity },
+          transaction,
+        });
+      }
+      // Update the book details
+      // const updatedRow = await db.Order.update(order, {
+      //   where: { id },
+      // });
+
+      await transaction.commit();
+      return true;
+    } catch (err) {
+      console.log(err);
+      await transaction.rollback();
+      return null;
+    }
   },
 
   delete: async (id) => {

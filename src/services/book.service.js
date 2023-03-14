@@ -45,10 +45,37 @@ const bookService = {
   },
 
   update: async (id, bookToUpdate) => {
-    const updatedRow = await db.Book.update(bookToUpdate, {
-      where: { id },
+    const transaction = await db.sequelize.transaction();
+    console.log(bookToUpdate);
+
+    // Retrieve de book
+    const book = await db.Book.findByPk(id, {
+      include: [Genre, Publisher, Author],
     });
-    return updatedRow[0] === 1;
+
+    try {
+      // Remove the Author associations
+      book.setAuthors([]);
+      // Update the Author associations
+      for (const author of bookToUpdate.authors) {
+        await book.addAuthor(author.id, { transaction });
+      }
+      // Update the book details
+      const updatedRow = await db.Book.update(
+        bookToUpdate,
+        {
+          where: { id },
+        },
+        {
+          include: [db.Author],
+        }
+      );
+      await transaction.commit();
+      return updatedRow[0] === 1;
+    } catch (err) {
+      await transaction.rollback();
+      return null;
+    }
   },
 
   delete: async (id) => {
