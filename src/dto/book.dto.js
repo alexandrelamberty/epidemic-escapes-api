@@ -11,7 +11,7 @@ class BookDTO {
     this.authors = Authors
       ? Authors.map((author) => new AuthorDTO(author))
       : [];
-    // retail price ...
+    // FIXME: retail price ...
   }
 }
 

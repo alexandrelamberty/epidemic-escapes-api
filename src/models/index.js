@@ -51,8 +51,7 @@ db.Order.belongsTo(db.User);
 // User
 db.User.hasMany(db.Order);
 
-// Testing
-
+// Testing super many to many
 db.Book.hasMany(db.MM_Order_Book);
 db.MM_Order_Book.belongsTo(db.Book);
 db.Order.hasMany(db.MM_Order_Book);

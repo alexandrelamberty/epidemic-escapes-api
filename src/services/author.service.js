@@ -8,7 +8,6 @@ const authorService = {
       distinct: true,
       offset,
       limit,
-      include: ["Books"],
     });
     return {
       authors: rows.map((author) => new AuthorDTO(author)),
@@ -30,7 +29,9 @@ const authorService = {
   },
 
   getById: async (id) => {
-    const author = await db.Author.findByPk(id);
+    const author = await db.Author.findByPk(id, {
+      include: [Book],
+    });
     return author ? new AuthorDTO(author) : null;
   },
 

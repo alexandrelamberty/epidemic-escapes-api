@@ -79,6 +79,7 @@ const bookService = {
   },
 
   delete: async (id) => {
+    // FIXME: Delete cover
     const nbDeletedRow = await db.Book.destroy({
       where: { id },
     });
@@ -86,6 +87,7 @@ const bookService = {
   },
 
   updateCover: async (id, filename) => {
+    // FIXME: Remove old cover when updating
     const data = {
       cover: `/images/covers/${filename}`,
     };

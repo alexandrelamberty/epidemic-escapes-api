@@ -20,6 +20,7 @@ module.exports = (sequelize) => {
       validated: {
         type: DataTypes.BOOLEAN,
         allowNull: true,
+        // FIXME: validate boolean
       },
     },
     {
