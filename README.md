@@ -1,18 +1,18 @@
 [![Node build](https://github.com/alexandrelamberty/bookstore-api/actions/workflows/node.yaml/badge.svg)](https://github.com/alexandrelamberty/bookstore-api/actions/workflows/node.yaml)
-
-[![Docker & DockerHub](https://github.com/alexandrelamberty/bookstore-api/actions/workflows/docker.yml/badge.svg)](https://github.com/alexandrelamberty/bookstore-api/actions/workflows/docker.yml)
+[![Node Docker DockerHub](https://github.com/alexandrelamberty/bookstore-api/actions/workflows/docker.yml/badge.svg)](https://github.com/alexandrelamberty/bookstore-api/actions/workflows/docker.yml)
 
 # Bookstore API
 
 ## Usage
 
-This API is part of a Docker stack. See [Epidemic-Escapes](), the main project to launch the complete stack.
+This API is part of a Docker stack. See the [Epidemic-Escapes](https://github.com/alexandrelamberty/epidemic-escapes) project.
 
 ## Development
 
-To start the API without the launching the complete stack, a MySQL database is needed. To change the database see <https://sequelize.org/docs/v6/getting-started/> for the sequelize drivers available. After installation change the dialect in `src/models/index.js` and `config/config.js`.
+To start the API without launching the complete stack, a MySQL database is needed.
+To change the database see <https://sequelize.org/docs/v6/getting-started/> for the sequelize drivers available. After installation change the dialect in `src/models/index.js` and `config/config.js`.
 
-Create an `.env.dev` file and add the following environment variables.
+Create an `.env` file and add the following environment variables and fill accordingly with the database configuration. The rest of the configuration work as it is in development.
 
 ```properties
 NODE_ENV="development"
@@ -28,42 +28,10 @@ JWT_ISSUER=epidemic-escapes
 JWT_AUDIENCE=web-epimic-escapes
 ```
 
-fill accordingly with the database configuration.
-
-### Starting the API
-
-Start the chosen database with Docker.
-
-```shell
-docker compose up mysql
-```
-
-See <https://sequelize.org/docs/v6/getting-started/> for the sequelize drivers available, and look at the `docker-compose.yml` for the available database services.
-
-Start the application in watch mode with nodemon
+Start the application in watch mode
 
 ```shell
 npm run star:dev
-```
-
-### Docker
-
-Build the image.
-
-```shell
-docker build . -t alexandrelamberty/bookstore-api:tag
-```
-
-Run the image
-
-```shell
-docker run -p 3000:3000 --network=bookstore_default --env-file .env --name bookstore-api -d alexandrelamberty/bookstore-api:tag
-```
-
-Push image to DockerHub
-
-```shell
-docker push alexandrelamberty/bookstore-api:tag
 ```
 
 ## Migrations
@@ -96,7 +64,27 @@ npm run seed:undo
 
 ## Tests
 
-## Production
+### Docker
+
+Build the image.
+
+```shell
+docker build -t alexandrelamberty/bookstore-api:tag .
+```
+
+Run the image with the default network and storage.
+
+// FIXME: add storage
+
+```shell
+docker run -p 3000:3000 --network=bookstore_default --env-file .env.dev --name bookstore-api -d alexandrelamberty/bookstore-api:tag
+```
+
+Push image to DockerHub
+
+```shell
+docker push alexandrelamberty/bookstore-api:tag
+```
 
 ## References
 
