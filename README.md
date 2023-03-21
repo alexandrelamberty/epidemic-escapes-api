@@ -1,9 +1,5 @@
 # Epidemic Escapes
 
-## Bugs
-
-- Argon2 hash cannot be stored in MySQL
-
 ## Configuration
 
 ```properties
@@ -36,7 +32,33 @@ Start the application in watch mode with nodemon
 npm run star:dev
 ```
 
+## Seeds
+
+Running the seeds
+
+```shell
+npm run seed:all
+```
+
+Roll back seeding
+
+```shell
+npm run seed:undo
+```
+
 ## Migrations
+
+Run the migrations
+
+```shell
+npm run migrate:up
+```
+
+Roll back migrations
+
+```shell
+npm run migrate:undo
+```
 
 ## Tests
 
