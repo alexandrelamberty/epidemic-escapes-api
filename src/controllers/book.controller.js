@@ -14,8 +14,9 @@ const bookController = {
    */
   getAll: async (req, res) => {
     const { offset, limit } = req.pagination;
-    const { books, count } = await bookService.getAll(offset, limit);
-    console.log(books);
+    const genreId = req.query.genreId;
+    console.log(req);
+    const { books, count } = await bookService.getAll(offset, limit, genreId);
     res.status(200).json(new SuccessArrayResponse(books, count));
   },
 

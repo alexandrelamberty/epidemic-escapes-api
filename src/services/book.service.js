@@ -1,14 +1,22 @@
+const { where, Op } = require("sequelize");
 const { BookDTO } = require("../dto/book.dto");
 const { Genre, Publisher, Author } = require("../models");
 const db = require("../models");
 
 const bookService = {
-  getAll: async (offset, limit) => {
+  getAll: async (offset, limit, genreId) => {
     const { rows, count } = await db.Book.findAndCountAll({
+      // where: {
+      //   genreId: { [Op.eq]: genreId },
+      // },
       distinct: true,
       offset,
       limit,
-      include: [Genre, Publisher, Author],
+      include: [
+        Genre,
+        { model: Publisher, where: { id: { [Op.eq]: "1" } } },
+        Author,
+      ],
     });
     return {
       books: rows.map((track) => new BookDTO(track)),

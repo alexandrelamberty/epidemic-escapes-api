@@ -5,8 +5,10 @@ const bookRouter = require("./book.router");
 const genreRouter = require("./genre.router");
 const publisherRouter = require("./publisher.router");
 const orderRouter = require("./order.router");
+const homeRouter = require("./home.router");
 
 const router = require("express").Router();
+router.use("/", homeRouter);
 router.use("/auth", authRouter);
 router.use("/users", userRouter);
 router.use("/orders", orderRouter);

@@ -7,7 +7,7 @@ const publisherService = {
       distinct: true,
       offset,
       limit,
-      include: [db.Book],
+      // include: [db.Book],
     });
     return {
       publishers: rows.map((publisher) => new PublisherDTO(publisher)),
@@ -16,7 +16,9 @@ const publisherService = {
   },
 
   getById: async (id) => {
-    const publisher = await db.Publisher.findByPk(id);
+    const publisher = await db.Publisher.findByPk(id, {
+      include: [db.Book],
+    });
     return publisher ? new PublisherDTO(publisher) : null;
   },
 
