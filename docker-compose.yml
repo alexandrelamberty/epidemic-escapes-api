@@ -20,16 +20,8 @@ services:
       JWT_EXPIRE: 1d
       JWT_ISSUER: epidemic-escapes
       JWT_AUDIENCE: web-epimic-escapes
-
-  # Databases
-  
-  # https://hub.docker.com/_/postgres
-  postgress:
-    image: postgres
-    restart: always
-    environment:
-      POSTGRES_PASSWORD: password
-      POSTGRES_DB: bookstore
+    depends_on:
+      - mysql
 
   # https://hub.docker.com/_/mysql
   mysql:
@@ -44,37 +36,3 @@ services:
     expose:
       - '3306'
 
-  # https://hub.docker.com/_/mariadb
-  mariadb:
-    image: mariadb
-    restart: always
-    environment:
-      MARIADB_ROOT_PASSWORD: password
-      MARIADB_DATABASE: bookstore
-
-  # 
-  mssqlserver:
-    image: microsoft/mssql-server-linux:2017-latest
-    ports:
-      - "1433:1433"
-    environment:
-      SA_PASSWORD: "123456"
-      ACCEPT_EULA: "Y"
-
-  # Database Administration tools
-  
-  # https://hub.docker.com/_/adminer
-  adminer:
-    image: adminer
-    restart: always
-    ports:
-      - 8080:8080
-
-  # https://hub.docker.com/r/dpage/pgadmin4/
-  # https://github.com/khezen/compose-postgres
-  # https://belowthemalt.com/2021/06/09/run-postgresql-and-pgadmin-in-docker-for-local-development-using-docker-compose/
-  pgadmin:
-    image: dpage/pgadmin4
-    environment:
-      PGADMIN_DEFAULT_PASSWORD: ""
-      PGADMIN_CONFIG_SERVER_MODE: 'False'
