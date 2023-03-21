@@ -1,4 +1,8 @@
-# Epidemic Escapes
+[![Node build](https://github.com/alexandrelamberty/bookstore-api/actions/workflows/node.yaml/badge.svg)](https://github.com/alexandrelamberty/bookstore-api/actions/workflows/node.yaml)
+
+[![Docker & DockerHub](https://github.com/alexandrelamberty/bookstore-api/actions/workflows/docker.yml/badge.svg)](https://github.com/alexandrelamberty/bookstore-api/actions/workflows/docker.yml)
+
+# Bookstore API
 
 ## Usage
 
