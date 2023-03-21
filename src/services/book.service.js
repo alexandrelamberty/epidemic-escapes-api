@@ -15,7 +15,7 @@ const bookService = {
       include: [
         Genre,
         { model: Publisher, where: { id: { [Op.eq]: "1" } } },
-        Author,
+        { model: Author, where: { id: { [Op.eq]: "1" } } },
       ],
     });
     return {
@@ -24,15 +24,15 @@ const bookService = {
     };
   },
 
-  getById: async (id) => {
-    const book = await db.Book.findByPk(id, {
+  getAllByGenreId: async (id) => {
+    const book = await db.Book.findAll(id, {
       include: [Genre, Publisher, Author],
     });
     return book ? new BookDTO(book) : null;
   },
 
-  getByGenreId: async (id) => {
-    const book = await db.Book.findAll(id, {
+  getById: async (id) => {
+    const book = await db.Book.findByPk(id, {
       include: [Genre, Publisher, Author],
     });
     return book ? new BookDTO(book) : null;
