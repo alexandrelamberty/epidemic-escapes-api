@@ -31,6 +31,13 @@ const bookService = {
     return book ? new BookDTO(book) : null;
   },
 
+  getByGenreId: async (id) => {
+    const book = await db.Book.findAll(id, {
+      include: [Genre, Publisher, Author],
+    });
+    return book ? new BookDTO(book) : null;
+  },
+
   create: async (bookToAdd) => {
     const transaction = await db.sequelize.transaction();
     let book;
@@ -87,6 +94,7 @@ const bookService = {
   },
 
   delete: async (id) => {
+    // FIXME: Delete cover
     const nbDeletedRow = await db.Book.destroy({
       where: { id },
     });
@@ -94,6 +102,7 @@ const bookService = {
   },
 
   updateCover: async (id, filename) => {
+    // FIXME: Remove old cover when updating
     const data = {
       cover: `/images/covers/${filename}`,
     };

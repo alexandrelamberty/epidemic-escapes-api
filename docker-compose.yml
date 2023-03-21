@@ -2,6 +2,25 @@ version: '3.1'
 
 services:
 
+  # API
+  app:
+    container_name: bookstore-api
+    restart: always
+    build: .
+    ports:
+      - '3000:3000'
+    environment:
+      PORT: 3000
+      DB_PORT: 3306
+      DB_SERVER: mysql
+      DB_USERNAME: root
+      DB_PASSWORD: password
+      DB_DATABASE: bookstore
+      JWT_SECRET: d7a481461577ba4c3c4c6946cca7204b
+      JWT_EXPIRE: 1d
+      JWT_ISSUER: epidemic-escapes
+      JWT_AUDIENCE: web-epimic-escapes
+
   # Databases
   
   # https://hub.docker.com/_/postgres
@@ -15,13 +34,15 @@ services:
   # https://hub.docker.com/_/mysql
   mysql:
     image: mysql
-    command: --default-authentication-plugin=mysql_native_password
+    command: mysqld --default-authentication-plugin=mysql_native_password
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: password
       MYSQL_DATABASE: bookstore
     ports:
       - 3306:3306
+    expose:
+      - '3306'
 
   # https://hub.docker.com/_/mariadb
   mariadb:

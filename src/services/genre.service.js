@@ -16,7 +16,9 @@ const genreService = {
   },
 
   getById: async (id) => {
-    const genre = await db.Genre.findByPk(id);
+    const genre = await db.Genre.findByPk(id, {
+      include: [db.Book],
+    });
     return genre ? new GenreDTO(genre) : null;
   },
 
@@ -36,7 +38,6 @@ const genreService = {
     const nbDeletedRow = await db.Genre.destroy({
       where: { id },
     });
-
     return nbDeletedRow === 1;
   },
 

@@ -14,16 +14,13 @@ const orderService = {
         },
         {
           model: db.MM_Order_Book,
+          // Fixme: Remove order as we are in an order
           include: [db.Book, db.Order],
         },
       ],
     });
-    // console.log(rows);
     return {
-      orders: rows.map((order) => {
-        // console.log(order.MM_Order_Books);
-        return new OrderDTO(order);
-      }),
+      orders: rows.map((order) => new OrderDTO(order)),
       count,
     };
   },
@@ -36,19 +33,16 @@ const orderService = {
         },
         {
           model: db.MM_Order_Book,
+          // FIXME: Remove order as we are in an order
           include: [db.Book, db.Order],
         },
       ],
     });
-    console.log("Get Order By Id: ", order);
-    // order.getBooks();
-    // console.log(order);
     return order ? new OrderDTO(order) : null;
   },
 
   create: async (userId, orderToAdd) => {
     const transaction = await db.sequelize.transaction();
-
     try {
       // Create the order
       let order = await db.Order.create({ UserId: userId });
@@ -63,7 +57,14 @@ const orderService = {
       await transaction.commit();
 
       const addedOrder = await db.Order.findByPk(order.id, {
-        include: [db.User, db.Book],
+        include: [
+          db.User,
+          {
+            model: db.MM_Order_Book,
+            // FIXME: Remove order as we are in an order
+            include: [db.Book, db.Order],
+          },
+        ],
       });
 
       return addedOrder ? new OrderDTO(addedOrder) : null;
@@ -75,8 +76,6 @@ const orderService = {
   },
 
   update: async (id, updateOrder) => {
-    console.log("------ update order id: ", id, updateOrder);
-
     const transaction = await db.sequelize.transaction();
 
     try {
