@@ -10,6 +10,7 @@ on:
   workflow_dispatch:
 jobs:
   build:
+    name: "Node build"
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -24,9 +25,8 @@ jobs:
       - run: npm run build --if-present
       # - run: npm test
   docker:
-    if: ${{ failure() }}
     needs: build
-    name: "Build Docker image and push to DockerHub"
+    name: "Docker build and push to DockerHub"
     runs-on: ubuntu-latest
     steps:
       - name: Check out the repo
