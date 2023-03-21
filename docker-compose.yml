@@ -10,16 +10,16 @@ services:
     ports:
       - '3000:3000'
     environment:
-      PORT: 3000
-      DB_PORT: 3306
-      DB_SERVER: mysql
-      DB_USERNAME: root
-      DB_PASSWORD: password
-      DB_DATABASE: bookstore
-      JWT_SECRET: d7a481461577ba4c3c4c6946cca7204b
-      JWT_EXPIRE: 1d
-      JWT_ISSUER: epidemic-escapes
-      JWT_AUDIENCE: web-epimic-escapes
+      PORT: ${PORT}
+      DB_PORT: ${DB_PORT}
+      DB_SERVER: ${DB_SERVER}
+      DB_USERNAME: ${DB_USERNAME}
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_DATABASE: ${DB_BOOKSTORE}
+      JWT_SECRET: ${JWT_SECRET}
+      JWT_EXPIRE: ${JWT_EXPIRE}
+      JWT_ISSUER: ${JWT_ISSUER}
+      JWT_AUDIENCE: ${JWT_AUDIENCE}
     depends_on:
       - mysql
 
@@ -29,8 +29,8 @@ services:
     command: mysqld --default-authentication-plugin=mysql_native_password
     restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: password
-      MYSQL_DATABASE: bookstore
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+      MYSQL_DATABASE: ${DB_DATABASE}
     ports:
       - 3306:3306
     expose:
