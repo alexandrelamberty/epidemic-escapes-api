@@ -34,6 +34,12 @@ Start the application in watch mode
 npm run star:dev
 ```
 
+Development database
+
+```shell
+docker compose --env-file .env up
+```
+
 ## Migrations
 
 Run the migrations
