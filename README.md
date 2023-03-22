@@ -74,10 +74,10 @@ docker build -t alexandrelamberty/bookstore-api:tag .
 
 Run the image with the default network and storage.
 
-// FIXME: add storage
+// FIXME: add storage reference from stack
 
 ```shell
-docker run -p 3000:3000 --network=bookstore_default --env-file .env.dev --name bookstore-api -d alexandrelamberty/bookstore-api:tag
+docker run -p 3000:3000 --network=bookstore_default --mount source=media_data,target=/usr/src/app/public --env-file .env.dev --name bookstore-api -d alexandrelamberty/bookstore-api:tag
 ```
 
 Push image to DockerHub
