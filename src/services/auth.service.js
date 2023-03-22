@@ -23,7 +23,6 @@ const authService = {
     const user = await db.User.findOne({
       where: { email },
     });
-    console.log(user);
     if (!user) {
       return null;
     }

@@ -8,6 +8,17 @@ const {
 
 const publisherController = {
   /**
+   * Search for Publishers
+   * @param {Request} req
+   * @param {Response} res
+   */
+  search: async (req, res) => {
+    const { terms } = req.params;
+    const { publishers, count } = await publisherService.search(terms);
+    res.status(200).json(new SuccessArrayResponse(publishers, count));
+  },
+
+  /**
    * Get All Publishers
    * @param {Request} req
    * @param {Response} res

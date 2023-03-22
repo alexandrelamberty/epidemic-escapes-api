@@ -1,8 +1,34 @@
+const { Op } = require("sequelize");
 const { AuthorDTO } = require("../dto/author.dto");
 const { Book } = require("../models");
 const db = require("../models");
 
 const authorService = {
+  search: async (terms) => {
+    console.log("Search terms", terms);
+    const { rows, count } = await db.Author.findAndCountAll({
+      where: {
+        [Op.or]: [
+          {
+            firstName: {
+              [Op.like]: `%${terms}%`,
+            },
+          },
+          {
+            lastName: {
+              [Op.like]: `%${terms}%`,
+            },
+          },
+        ],
+      },
+      distinct: true,
+    });
+    return {
+      authors: rows.map((author) => new AuthorDTO(author)),
+      count,
+    };
+  },
+
   getAll: async (offset, limit) => {
     const { rows, count } = await db.Author.findAndCountAll({
       distinct: true,

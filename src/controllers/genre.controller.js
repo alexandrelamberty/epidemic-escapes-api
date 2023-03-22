@@ -12,6 +12,17 @@ const genreController = {
    * @param {Request} req
    * @param {Response} res
    */
+  search: async (req, res) => {
+    const { terms } = req.params;
+    const { genres, count } = await genreService.search(terms);
+    res.status(200).json(new SuccessArrayResponse(genres, count));
+  },
+
+  /**
+   * Get All Genres
+   * @param {Request} req
+   * @param {Response} res
+   */
   getAll: async (req, res) => {
     const { offset, limit } = req.pagination;
     const { genres, count } = await genreService.getAll(offset, limit);

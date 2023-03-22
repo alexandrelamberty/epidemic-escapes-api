@@ -4,6 +4,26 @@ const { Genre, Publisher, Author } = require("../models");
 const db = require("../models");
 
 const bookService = {
+  search: async (terms) => {
+    const { rows, count } = await db.Book.findAndCountAll({
+      where: {
+        title: {
+          [Op.like]: `%${terms}%`,
+        },
+      },
+      distinct: true,
+      include: [
+        Genre,
+        { model: Publisher, where: { id: { [Op.eq]: "1" } } },
+        Author,
+      ],
+    });
+    return {
+      books: rows.map((track) => new BookDTO(track)),
+      count,
+    };
+  },
+
   getAll: async (offset, limit, genreId) => {
     const { rows, count } = await db.Book.findAndCountAll({
       // where: {

@@ -1,7 +1,25 @@
+const { Op } = require("sequelize");
 const { GenreDTO } = require("../dto/genre.dto");
 const db = require("../models");
 
 const genreService = {
+  search: async (terms) => {
+    console.log("Search terms", terms);
+    const { rows, count } = await db.Genre.findAndCountAll({
+      where: {
+        name: {
+          [Op.like]: `${terms}%`,
+        },
+      },
+      attributes: ["name"],
+      distinct: true,
+    });
+    return {
+      genres: rows.map((genre) => new GenreDTO(genre)),
+      count,
+    };
+  },
+
   getAll: async (offset, limit) => {
     const { rows, count } = await db.Genre.findAndCountAll({
       distinct: true,
