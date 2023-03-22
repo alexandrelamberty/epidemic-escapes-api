@@ -8,7 +8,11 @@ const cors = require("cors");
 const app = express();
 app.use(
   cors({
-    origin: ["https://epidemic-escapes.netlify.app/", "http://localhost:4200"],
+    origin: [
+      "https://epidemic-escapes.netlify.app/",
+      "http://localhost:4200",
+      "http://localhost",
+    ],
   })
 );
 app.use(express.json());
@@ -24,9 +28,9 @@ db.sequelize
 if (process.env.NODE_ENV === "development") {
   // db.sequelize.sync({ force: true });
   // db.sequelize.sync({ alter: { drop: false } });
+} else {
+  db.sequelize.sync({ force: false });
 }
-
-// db.sequelize.sync({ force: true });
 
 // Router
 const router = require("./routes");
