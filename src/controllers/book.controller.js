@@ -8,6 +8,17 @@ const {
 
 const bookController = {
   /**
+   * Search Books
+   * @param {Request} req
+   * @param {Response} res
+   */
+  search: async (req, res) => {
+    const terms = req.params.terms;
+    const { books, count } = await bookService.search(terms);
+    res.status(200).json(new SuccessArrayResponse(books, count));
+  },
+
+  /**
    * Get All Books
    * @param {Request} req
    * @param {Response} res

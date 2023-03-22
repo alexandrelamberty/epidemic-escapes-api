@@ -1,7 +1,24 @@
+const { Op } = require("sequelize");
 const { PublisherDTO: PublisherDTO } = require("../dto/publisher.dto");
 const db = require("../models");
 
 const publisherService = {
+  search: async (terms) => {
+    console.log("Search terms", terms);
+    const { rows, count } = await db.Publisher.findAndCountAll({
+      where: {
+        name: {
+          [Op.like]: `%${terms}%`,
+        },
+      },
+      distinct: true,
+    });
+    return {
+      publishers: rows.map((publisher) => new PublisherDTO(publisher)),
+      count,
+    };
+  },
+
   getAll: async (offset, limit) => {
     const { rows, count } = await db.Publisher.findAndCountAll({
       distinct: true,

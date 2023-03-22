@@ -14,6 +14,8 @@ genreRouter
     genreController.create
   );
 
+genreRouter.route("/search/:terms").get(genreController.search);
+
 genreRouter
   .route("/:id")
   .get(genreController.getById)

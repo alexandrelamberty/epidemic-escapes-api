@@ -14,15 +14,15 @@ app.use(
 const db = require("./models");
 db.sequelize
   .authenticate()
-  .then(() => console.log("Connection DB successfull"))
+  .then(() => console.log("Connection DB successful"))
   .catch((err) => console.log("Connection DB failed : ", err));
 
 if (process.env.NODE_ENV === "development") {
-  db.sequelize.sync({ force: true });
+  // db.sequelize.sync({ force: true });
   // db.sequelize.sync({ alter: { drop: false } });
 }
 
-db.sequelize.sync({ force: true });
+// db.sequelize.sync({ force: true });
 
 app.use(express.json());
 app.use(express.static("public"));
