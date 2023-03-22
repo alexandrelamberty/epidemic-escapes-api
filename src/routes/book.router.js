@@ -22,6 +22,8 @@ bookRouter
     bookController.create
   );
 
+bookRouter.route("/search/:terms").get(bookController.search);
+
 bookRouter
   .route("/:id")
   .get(bookController.getById)

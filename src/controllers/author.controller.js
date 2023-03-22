@@ -11,6 +11,18 @@ const authorController = {
    * @param {Request} req
    * @param {Response} res
    */
+  search: async (req, res) => {
+    const { offset, limit } = req.pagination;
+    const { terms } = req.params;
+    const { authors, count } = await authorService.search(terms);
+    res.status(200).json(new SuccessArrayResponse(authors, count));
+  },
+
+  /**
+   * Get All Authors
+   * @param {Request} req
+   * @param {Response} res
+   */
   getAll: async (req, res) => {
     const { offset, limit } = req.pagination;
     const { authors, count } = await authorService.getAll(offset, limit);

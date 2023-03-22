@@ -17,6 +17,10 @@ authorRouter
   );
 
 authorRouter
+  .route("/search/:terms")
+  .get(pagination({ defaultLimit: 25 }), authorController.search);
+
+authorRouter
   .route("/:id")
   .get(authorController.getById)
   .put(

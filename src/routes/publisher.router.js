@@ -16,6 +16,8 @@ publisherRouter
     publisherController.create
   );
 
+publisherRouter.route("/search/:terms").get(publisherController.search);
+
 publisherRouter
   .route("/:id")
   .get(publisherController.getById)
