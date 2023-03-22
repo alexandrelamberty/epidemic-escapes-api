@@ -64,7 +64,7 @@ npm run seed:undo
 
 ## Tests
 
-### Docker
+## Docker
 
 Build the image.
 
