@@ -4,13 +4,17 @@ require("express-async-errors");
 const express = require("express");
 const cors = require("cors");
 
+// Application
 const app = express();
 app.use(
   cors({
     origin: ["https://epidemic-escapes.netlify.app/", "http://localhost:4200"],
   })
 );
+app.use(express.json());
+app.use(express.static("public"));
 
+// Database initialization
 const db = require("./models");
 db.sequelize
   .authenticate()
@@ -24,12 +28,11 @@ if (process.env.NODE_ENV === "development") {
 
 // db.sequelize.sync({ force: true });
 
-app.use(express.json());
-app.use(express.static("public"));
-
+// Router
 const router = require("./routes");
 app.use("/", router);
 
-app.listen(process.env.PORT, () => {
-  console.log(`Server API started on port:${process.env.PORT}`);
+// Starting the application
+app.listen(process.env.API_PORT, () => {
+  console.log(`Server API started on port:${process.env.API_PORT}`);
 });
