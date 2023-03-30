@@ -26,7 +26,7 @@ db.sequelize
   .catch((err) => console.log("Connection DB failed : ", err));
 
 if (process.env.NODE_ENV === "development") {
-  // db.sequelize.sync({ force: true });
+  db.sequelize.sync({ force: true });
   // db.sequelize.sync({ alter: { drop: false } });
 } else {
   db.sequelize.sync({ force: false });
