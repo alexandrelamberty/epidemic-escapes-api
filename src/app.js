@@ -9,6 +9,7 @@ const app = express();
 app.use(
   cors({
     origin: [
+      "https://bookstore.eevos.be",
       "https://epidemic-escapes.netlify.app/",
       "http://localhost:4200",
       "http://localhost",
