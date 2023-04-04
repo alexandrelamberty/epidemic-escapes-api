@@ -10,7 +10,9 @@
     "migrate:up": "npx sequelize-cli db:migrate",
     "migrate:undo": "npx sequelize-cli db:migrate:undo",
     "seed:all": "npx sequelize-cli db:seed:all",
-    "seed:undo": "npx sequelize-cli db:seed:undo:all"
+    "seed:undo": "npx sequelize-cli db:seed:undo:all",
+    "docker:build": "docker build . -t alexandrelamberty/bookstore-api:master",
+    "docker:push": "docker push alexandrelamberty/bookstore-api:master"
   },
   "author": "Aude",
   "license": "ISC",
