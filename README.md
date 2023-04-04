@@ -69,7 +69,7 @@ npm run seed:undo
 Build the image.
 
 ```shell
-docker build -t alexandrelamberty/bookstore-api:tag .
+docker build . -t alexandrelamberty/bookstore-api:tag 
 ```
 
 Run the image with the default network and storage.
