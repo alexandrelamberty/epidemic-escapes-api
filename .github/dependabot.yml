@@ -5,7 +5,11 @@
 
 version: 2
 updates:
-  - package-ecosystem: "npm" # See documentation for possible values
-    directory: "/" # Location of package manifests
+  - package-ecosystem: "npm" # Specify the package ecosystem
+    directory: "/" # Directory where the package manifests are located
     schedule:
-      interval: "weekly"
+      interval: "weekly" # Schedule interval for updates
+    commit-message:
+      prefix: "chore(deps)" # Prefix for general dependencies
+      prefix-development: "chore(dev-deps)" # Prefix for development dependencies
+      include: "scope" # Include the scope (list of updated dependencies) in the commit message
